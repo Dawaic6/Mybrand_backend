@@ -1,33 +1,25 @@
-import express from 'express';
-import http from 'http';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import router from './router';
+import express from "express";
+import mongoose, { ConnectOptions } from "mongoose";
+import dotenv from "dotenv";
+import allRoutes from "./router/index";
+import blogRoutes from "./router/blog_routes";
+
+dotenv.config()
+
+const app = express()
+const PORT = process.env.PORT || 3000
+mongoose
+    .connect(process.env.MONGO_URL!, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,  
+    } as ConnectOptions)
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.log("MongoDB connection error:", err));
+app.use(express.json())
+app.use("/api/v1",allRoutes);
+app.use("/api/v1",blogRoutes);
 
 
-const app= express();
-app.use(cors({
-    credentials:true,
-}))
-
-app.use(compression());
-app.use(cookieParser());
-app.use(bodyParser.json());
-
-const server = http.createServer(app);
-
-server.listen(8080,() =>{
-    console.log('Server running on http://localhost:8080/');
-});
-
-const MONGO_URL='mongodb+srv://iradukundasangwacedric2001:cedric@cluster0.4qxlpeo.mongodb.net/'
-
-mongoose.Promise =Promise;
-mongoose.connect(MONGO_URL);
-mongoose.connection.on('error',(error:Error)=>
-console.log(error));
-
-app.use('/',router());
+app.listen(PORT,()=>{
+    console.log("Server Started at Port " + PORT)
+})
