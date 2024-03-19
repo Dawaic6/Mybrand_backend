@@ -7,11 +7,11 @@ class BlogController {
     static async createBlog(req: Request, res: Response) {
         try {
           const { error } = validateBlogModelData(req.body);
-          if (error) {
+          if (error){
             return res.status(400).send(error.details[0].message);
           }
     
-          if (!req.file) {
+          if (!req.file){
             return res.status(400).json({
               message: "Please upload a file",
             });
@@ -51,7 +51,7 @@ class BlogController {
             });
           }
     
-          let result;
+          let result:any;
           if (req.file) {
             result = await UploadToCloud(req.file, res);
           }
@@ -126,10 +126,9 @@ class BlogController {
               message: "Blog not found",
             });
         }
-  
         await Blog.findByIdAndDelete(blogId);
         return res.status(204).json({
-          message: 'User deleted successfully',
+          message: "User deleted successfully",
         });
       } catch (error) {
         console.error(error);
