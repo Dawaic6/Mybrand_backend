@@ -13,7 +13,7 @@ class BlogController {
     
           if (!req.file){
             return res.status(400).json({
-              message: "Please upload a file",
+              message: "blog image is missing",
             });
           }
     
@@ -127,8 +127,8 @@ class BlogController {
             });
         }
         await Blog.findByIdAndDelete(blogId);
-        return res.status(204).json({
-          message: "User deleted successfully",
+        return res.status(200).json({
+          message: "Blogs are deleted successfully",
         });
       } catch (error) {
         console.error(error);

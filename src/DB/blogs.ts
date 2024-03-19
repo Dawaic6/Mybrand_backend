@@ -6,7 +6,6 @@ const blogSchemaValidate = Joi.object({
     blogDescription: Joi.string().required(),
     blogDate: Joi.string().required(),
     blogImage: Joi.string(),
-    likedBy: Joi.array().items(Joi.string()),
 });
 
 interface IBlog extends Document {
