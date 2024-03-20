@@ -3,6 +3,8 @@ import {Request,Response} from "express";
 import {hashPassword} from "../utils/bcrypt";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
+
 const signUp = async (req:Request,res:Response)=>{
     try{
     const userInputs = req.body
