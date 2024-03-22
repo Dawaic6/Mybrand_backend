@@ -1,9 +1,10 @@
 import express from "express";
 import mongoose, { ConnectOptions } from "mongoose";
 import dotenv from "dotenv";
-import allRoutes from "./router/index";
+import allRoutes from "./router/userRoute";
 import blogRoutes from "./router/blog_routes";
-
+import cantactRoutes from "./router/contacts_routes";
+import subscribeRoutes from "./router/subscribe_route";
 dotenv.config()
 
 const app = express()
@@ -18,7 +19,8 @@ mongoose
 app.use(express.json())
 app.use("/api/v1",allRoutes);
 app.use("/api/v1",blogRoutes);
-
+app.use("/api/v1",cantactRoutes);
+app.use("/api/v1",subscribeRoutes);
 
 app.listen(PORT,()=>{
     console.log("Server Started at Port " + PORT)
